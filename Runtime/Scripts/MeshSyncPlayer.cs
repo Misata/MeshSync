@@ -1668,19 +1668,24 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
         {
             AnimationData data = clipData.GetAnimation(ai);
 
-            string path = data.path;
-            EntityRecord rec = null;
-            m_clientObjects.TryGetValue(path, out rec);
-            Type recComponentType = default;
-            if (null != rec) {
-                if (rec.meshRenderer != null) recComponentType             = typeof(MeshRenderer);
-                else if (rec.skinnedMeshRenderer != null) recComponentType = typeof(SkinnedMeshRenderer);                
+            string    path             = data.path;
+            Type      recComponentType = default;
+            Transform target           = null;
+            {
+                EntityRecord rec = null;
+                m_clientObjects.TryGetValue(path, out rec);
+                if (null != rec) {
+                    target = rec.trans;
+                    
+                    if (rec.meshRenderer != null) 
+                        recComponentType = typeof(MeshRenderer);
+                    else if (rec.skinnedMeshRenderer != null) 
+                        recComponentType = typeof(SkinnedMeshRenderer);                
+                }
+                
             }
             
 
-            Transform target = null;
-            if (rec != null)
-                target = rec.trans;
             if (target == null)
             {
                 bool dummy = false;
