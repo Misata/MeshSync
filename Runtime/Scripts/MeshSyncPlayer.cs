@@ -1671,6 +1671,12 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
             string path = data.path;
             EntityRecord rec = null;
             m_clientObjects.TryGetValue(path, out rec);
+            Type recComponentType = default;
+            if (null != rec) {
+                if (rec.meshRenderer != null) recComponentType             = typeof(MeshRenderer);
+                else if (rec.skinnedMeshRenderer != null) recComponentType = typeof(SkinnedMeshRenderer);                
+            }
+            
 
             Transform target = null;
             if (rec != null)
@@ -1732,12 +1738,8 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
                 path = animPath,
                 enableVisibility = m_config.SyncVisibility,
                 usePhysicalCameraParams = m_usePhysicalCameraParams,
+                mainComponentType = recComponentType,
             };
-            if (rec != null)
-            {
-                if (rec.meshRenderer != null) ctx.mainComponentType = typeof(MeshRenderer);
-                else if (rec.skinnedMeshRenderer != null) ctx.mainComponentType = typeof(SkinnedMeshRenderer);
-            }
             data.ExportToClip(ctx);
         }
 
