@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Unity.MeshSync {
 
@@ -6,7 +7,7 @@ internal class FlaggedDictionary<K,V> {
 
     internal bool IsDirty() { return m_isDirty;}
 
-    internal void SetDirty(bool dirty) { return m_isDirty;}
+    internal void SetDirty(bool dirty) { m_isDirty = dirty;}
     
     internal void Clear() {
         m_dictionary.Clear();
