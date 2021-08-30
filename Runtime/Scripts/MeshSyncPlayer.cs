@@ -237,7 +237,7 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
     /// </summary>
     public void OnBeforeSerialize() {
         OnBeforeSerializeMeshSyncPlayerV();
-        SerializeDictionary(m_clientObjects, ref m_clientObjects_keys, ref m_clientObjects_values);
+        m_clientObjects.Flush(ref m_clientObjects_keys, ref m_clientObjects_values);
         SerializeDictionary(m_hostObjects, ref m_hostObjects_keys, ref m_hostObjects_values);
         SerializeDictionary(m_objIDTable, ref m_objIDTable_keys, ref m_objIDTable_values);
         
@@ -248,7 +248,7 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
     /// Called during serialization as an implementation of ISerializationCallbackReceiver
     /// </summary>
     public void OnAfterDeserialize() {
-        DeserializeDictionary(m_clientObjects, ref m_clientObjects_keys, ref m_clientObjects_values);
+        m_clientObjects.Set(m_clientObjects_keys, m_clientObjects_values);
         DeserializeDictionary(m_hostObjects, ref m_hostObjects_keys, ref m_hostObjects_values);
         DeserializeDictionary(m_objIDTable, ref m_objIDTable_keys, ref m_objIDTable_values);
         
@@ -648,7 +648,7 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
 #if UNITY_EDITOR
         // sort objects by index
         if (m_sortEntities) {
-            IOrderedEnumerable<EntityRecord> rec = m_clientObjects.Values.OrderBy(v => v.index);
+            IOrderedEnumerable<EntityRecord> rec = m_clientObjects.GetValues().OrderBy(v => v.index);
             foreach (EntityRecord r in rec) {
                 if (r.go != null)
                     r.go.GetComponent<Transform>().SetSiblingIndex(r.index + 1000);
@@ -2238,7 +2238,7 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
     private bool m_markMeshesDynamic     = false;
     private bool m_needReassignMaterials = false;
 
-    private   Dictionary<string, EntityRecord> m_clientObjects = new Dictionary<string, EntityRecord>();
+    private   FlaggedDictionary<string, EntityRecord> m_clientObjects = new FlaggedDictionary<string, EntityRecord>();
     protected Dictionary<int, EntityRecord>    m_hostObjects   = new Dictionary<int, EntityRecord>();
     private   Dictionary<GameObject, int>      m_objIDTable    = new Dictionary<GameObject, int>();
 
