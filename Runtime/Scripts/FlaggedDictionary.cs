@@ -31,12 +31,8 @@ internal class FlaggedDictionary<K,V> : IEnumerable {
         }
         catch (Exception e) {
             Debug.LogError(e);
-        }
-        finally {
             m_isDirty = true;
         }
-        
-
 
     }
 
