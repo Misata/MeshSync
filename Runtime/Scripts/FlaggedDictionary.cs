@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Unity.MeshSync {
 
@@ -17,9 +16,8 @@ internal class FlaggedDictionary<K,V> {
     void Flush(ref K[] keys, ref V[] values) {
         if (!m_isDirty)
             return;
-        
-        keys      = m_dictionary.Keys.ToArray();
-        values    = m_dictionary.Values.ToArray();
+
+        m_dictionary.ToKeyAndValues(ref keys, ref values);
         m_isDirty = false;
     }
     
