@@ -237,7 +237,7 @@ internal abstract class MeshSyncPlayer : MonoBehaviour, ISerializationCallbackRe
     /// </summary>
     public void OnBeforeSerialize() {
         OnBeforeSerializeMeshSyncPlayerV();
-        m_clientObjects.Flush(ref m_clientObjects_keys, ref m_clientObjects_values);
+        m_clientObjects.CopyKeyAndValuesTo(ref m_clientObjects_keys, ref m_clientObjects_values);
         SerializeDictionary(m_hostObjects, ref m_hostObjects_keys, ref m_hostObjects_values);
         SerializeDictionary(m_objIDTable, ref m_objIDTable_keys, ref m_objIDTable_values);
         

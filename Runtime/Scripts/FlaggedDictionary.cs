@@ -56,7 +56,7 @@ internal class FlaggedDictionary<K,V> : IEnumerable {
     
 //----------------------------------------------------------------------------------------------------------------------    
     
-    internal void Flush(ref K[] keys, ref V[] values, bool force = false) {
+    internal void CopyKeyAndValuesTo(ref K[] keys, ref V[] values, bool force = false) {
         if (!force && !m_isDirty)
             return;
 
