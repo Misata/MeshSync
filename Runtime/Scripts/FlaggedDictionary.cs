@@ -60,7 +60,7 @@ internal class FlaggedDictionary<K,V> : IEnumerable {
         if (!force && !m_isDirty)
             return;
 
-        m_dictionary.ToKeyAndValues(ref keys, ref values);
+        m_dictionary.CopyKeyAndValuesTo(ref keys, ref values);
         m_isDirty = false;
     }
 

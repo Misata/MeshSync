@@ -5,7 +5,7 @@ namespace Unity.MeshSync  {
 [Serializable]
 internal static class DictionaryExtensions {
 
-    internal static void ToKeyAndValues<K, V>(this Dictionary<K, V> dic, ref K[] keys, ref V[] values) {
+    internal static void CopyKeyAndValuesTo<K, V>(this Dictionary<K, V> dic, ref K[] keys, ref V[] values) {
         int count = dic.Count;
         keys   = new K[count];
         values = new V[count];        
