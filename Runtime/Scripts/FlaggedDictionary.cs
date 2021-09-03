@@ -6,10 +6,6 @@ using UnityEngine;
 namespace Unity.MeshSync {
 
 internal class FlaggedDictionary<K,V> : IEnumerable {
-
-    internal bool IsDirty() { return m_isDirty;}
-
-    internal void SetDirty(bool dirty) { m_isDirty = dirty;}
     
     internal void Clear() {
         m_dictionary.Clear();
